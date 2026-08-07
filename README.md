@@ -147,9 +147,11 @@ This matrix reflects Aixio testing, the supplied comparison runs, and product in
   <sub>Introducing Aixio Layer v1.0 — click to watch on YouTube</sub>
 </div>
 
-## Quick start
+## Where to use Aixio Layer v1
 
-Layer v1 is available inside [Aixio Studio](https://aixio.app/studio).
+Aixio Layer Image v1 is available in **[Aixio Studio](https://aixio.app/studio)** through the **Edit Layers** workflow. No local installation or model download is required: upload a finished image in the browser, run Layer v1, and continue editing the returned composition on the Studio canvas.
+
+### Use Layer v1 in Aixio Studio
 
 1. Open Aixio Studio and add a finished image.
 2. Choose **Edit Layers**.
