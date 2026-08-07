@@ -13,13 +13,14 @@ A system can perform well on object extraction while still returning a compositi
 
 ## Benchmark result
 
-**Aixio Layer v1 is the most capable image-to-layer model Aixio has tested to date.** On the current internal benchmark, Layer v1 scores **94% decomposition accuracy**, compared with **68% for Canva Magic Layers** and **34% for Lovart**.
+**Aixio Layer v1 is the most capable image-to-layer model Aixio has tested to date.** On the current internal benchmark, Layer v1 scores **94% decomposition accuracy**, compared with **68% for Canva Magic Layers**, **34% for Lovart**, and **30% for Picell**.
 
 | Model | Decomposition accuracy | Test status |
 | --- | ---: | --- |
 | **Aixio Layer v1** | **94%** | Current model |
 | Canva Magic Layers | 68% | Tested May 2026 |
 | Lovart | 34% | Aixio-tested result |
+| Picell | 30% | Aixio-tested result |
 
 This is an Aixio-reported comparison. It should not be described as an independently reproduced global leaderboard until the evaluation set, scoring code, and competitor configurations are public.
 
