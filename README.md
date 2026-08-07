@@ -58,30 +58,48 @@ The same dense retail poster was processed by Aixio Layer v1, Lovart, and Picell
 
 The honest test is not simply whether a tool cuts out visible objects. It is whether the design still works after those objects are moved: **Was the hidden background reconstructed? Did the text come back as usable type? Did the composition remain intact?**
 
-<table>
-  <tr>
-    <th>Aixio Layer v1</th>
-    <th>Lovart — supplied run</th>
-    <th>Picell — supplied run</th>
-  </tr>
-  <tr>
-    <td><img src="assets/cap2-aixio.png" alt="Aixio Layer v1 comparison result"></td>
-    <td><img src="assets/cap2-lovart.png" alt="Lovart comparison result"></td>
-    <td><img src="assets/cap2-picell.png" alt="Picell comparison result"></td>
-  </tr>
-  <tr>
-    <td>Meaningful elements, typography, and background structure are recovered.</td>
-    <td>Some elements are found, but parts of the background and display typography require rework.</td>
-    <td>Several visible pieces are extracted, but the composition is fragmented and the background is not reconstructed.</td>
-  </tr>
-</table>
+### 1. Aixio Layer v1 — reconstructed and editable
 
-| What we inspected | Aixio Layer v1 | Lovart — supplied run | Picell — supplied run |
-| --- | --- | --- | --- |
-| Meaningful element recognition | Complete poster structure recovered | Several elements remain fused | More elements found, but the offer is fragmented |
-| Background reconstruction | Poster surface, border, pattern, and paper field preserved | Returned frame is blank rather than reconstructed | Removed content leaves holes and remnants |
-| Typography | Copy returns as editable type with styling | Headline and small copy recognized, but design elements remain fused | Text is fragmented and requires rebuilding |
-| Continued editability | Elements can be moved while the composition remains usable | Significant manual reconstruction required | Composition requires rebuilding |
+![Aixio Layer v1 comparison result](assets/cap2-aixio.png)
+
+**What came back**
+
+- **Recognition:** the headline, complete offer badge, logo, three food groups, terms, checkerboard, border, and paper field are recovered as meaningful parts.
+- **Background:** the poster surface, border, pattern, and paper field continue behind the removed foreground elements.
+- **Typography:** copy returns as editable text while retaining more of the source styling and layout.
+- **Editability:** elements can be moved or rewritten without first reconstructing the composition by hand.
+
+> **What to look at:** the clean background on the right and the complete `BUY 5 GET 1` offer returned as one meaningful design element.
+
+---
+
+### 2. Lovart — partial recognition, structure still fused
+
+![Lovart comparison result](assets/cap2-lovart.png)
+
+**What required rework**
+
+- **Recognition:** the headline and small copy are recognized, but the logo, food, offer badge, checkerboard, and poster surface remain fused inside larger image regions.
+- **Background:** the returned frame is blank rather than a reconstruction of the original poster surface.
+- **Typography:** some copy is found, but the display typography and surrounding design relationships are not preserved closely enough for direct reuse.
+- **Editability:** major parts of the design must be manually separated or rebuilt before the composition can be revised.
+
+> **What to look at:** visible elements may be detected, but removing them does not reveal a usable clean plate underneath.
+
+---
+
+### 3. Picell — more pieces, fragmented composition
+
+![Picell comparison result](assets/cap2-picell.png)
+
+**What required rework**
+
+- **Recognition:** several visible pieces are extracted, but the `BUY 5 GET 1` offer is broken into disconnected fragments.
+- **Background:** removed content leaves checkerboard holes, text remnants, and incomplete regions rather than a reconstructed poster surface.
+- **Typography:** words are separated from the composition, but styling, grouping, and original line relationships are lost.
+- **Editability:** the extracted pieces exist, but the design has to be reassembled before it can be used as a working composition.
+
+> **What to look at:** extracting more pieces does not help when their semantic grouping and the background behind them are lost.
 
 These observations describe the supplied runs shown here, not every possible output from each product. Results vary with product version, source resolution, and design complexity. See the [full comparison article](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) and [evaluation notes](docs/EVALUATION.md) for context.
 
