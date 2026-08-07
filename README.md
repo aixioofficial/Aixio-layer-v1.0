@@ -103,39 +103,35 @@ The honest test is not simply whether a tool cuts out visible objects. It is whe
 
 These observations describe the supplied runs shown here, not every possible output from each product. Results vary with product version, source resolution, and design complexity. See the [full comparison article](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) and [evaluation notes](docs/EVALUATION.md) for context.
 
+## Capability comparison
+
+The supplied model-capabilities report compares whether each system supports the functions required to turn a flattened image into a genuinely editable composition.
+
+| Capability | **Aixio Layer v1** | Canva Magic Layers (May 2026) | Lovart | Picell | Qwen Image Layered (Jan 2026) |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| Background reconstructed behind objects | **Yes** | Partial | No | No | Partial |
+| Text returned as editable type | **Yes** | Breaks on dense text | Degraded | Degraded | No |
+| Typeface identified | **Yes** | Yes | Inaccurate | Inaccurate | No |
+| Orientation and perspective understood | **Yes** | No | No | No | No |
+| Native super-resolution | **Yes** | No | No | No | No |
+| User-directed manual extraction | **Yes** | No | No | No | No |
+| Deterministic output | **Yes** | No | Not disclosed | Not disclosed | Not disclosed |
+| Output can leave the platform | **Yes** | Canva only | Not disclosed | Not disclosed | Yes |
+
+**How to read the table:** “Degraded,” “Inaccurate,” and “Partial” mean the capability is present or attempted, but the evaluated output required material rework. “Not disclosed” means the supplied evaluation did not establish a reliable result.
+
+This matrix reflects Aixio testing, the supplied comparison runs, and product information available when the capability report was prepared. Competitor products change, so results should be read with the named versions and test dates rather than as permanent claims. See [Evaluation and Comparison Notes](docs/EVALUATION.md).
+
 ## What Layer v1 does better
 
-### 1. It recognizes the complete design
-
-Layer v1 recovers meaningful design units rather than returning a loose collection of crops. In the poster above, it identifies the headline, offer badge, logo, three food groups, terms, checkerboard, border, and paper field.
-
-### 2. It reconstructs what was hidden
-
-Removing an object is only useful if the space behind it is restored. Layer v1 performs amodal completion: it predicts the hidden continuation of backgrounds and objects so elements can be moved, resized, or removed without leaving obvious holes.
-
-### 3. It returns text as type
-
-Recognizing words is not enough. Layer v1 returns copy as editable strings and recovers typography attributes such as font family, weight, size, color, alignment, and placement when available. Designers can rewrite and localize the copy instead of rebuilding it from pixels.
-
-<p align="center">
-  <img src="assets/cap-layer-text.png" width="500" alt="Example text recovered as editable type">
-</p>
-
-### 4. It preserves clean, usable alpha
-
-Visual elements return as RGBA layers with transparent backgrounds, practical boundaries, and a usable stacking order—not only as approximate masks.
-
-<p align="center">
-  <img src="assets/cap-layer-rgba.png" width="300" alt="Example RGBA layer with a transparent background">
-</p>
-
-### 5. It preserves composition logic
-
-Layer v1 reasons about grouping, layer order, orientation, and perspective. The result retains the visual hierarchy of the source instead of scattering extracted pieces across a new layout.
-
-### 6. It preserves useful detail
-
-Native upsampling rebuilds useful texture and edge detail during decomposition. Extracted assets remain practical for continued design work instead of becoming softer than the source.
+- **Complete recognition:** recovers meaningful design units rather than a loose collection of crops.
+- **Amodal reconstruction:** predicts the content hidden behind foreground elements so objects can be moved without leaving holes.
+- **Native typography:** returns copy as editable strings with recovered font and styling attributes when available.
+- **Composition logic:** preserves grouping, stacking order, placement, orientation, and perspective.
+- **Usable RGBA output:** returns transparent visual layers with practical boundaries, not only approximate masks.
+- **Detail retention:** applies native super-resolution during decomposition to preserve texture and edge information.
+- **Manual control:** lets users direct extraction when an automatic pass misses an important element.
+- **Portable structure:** returns organized output that can continue through a broader creative workflow.
 
 ## See it in action
 
