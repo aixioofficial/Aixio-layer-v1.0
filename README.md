@@ -3,9 +3,9 @@
 
   # Aixio Layer v1
 
-  **Turn a flat image into editable design material.**
+  **The most capable image-to-layer model we have tested to date.**
 
-  Layer v1 reconstructs the background, separates visual elements, and recovers text as selectable, editable type—so a finished image can become a file you can keep designing.
+  **94% layer-decomposition accuracy** across 10,000 real designs and 36 categories. Layer v1 reconstructs the background, separates visual elements, and recovers text as selectable, editable type—so a finished image can become a file you can keep designing.
 
   [Try in Aixio Studio](https://aixio.app/studio) · [Watch the demo](https://youtu.be/BkdkW2nn3b0) · [Read the comparison](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) · [Model card](docs/MODEL_CARD.md) · [Evaluation](docs/EVALUATION.md)
 </div>
@@ -27,76 +27,34 @@ Aixio Layer v1 is an image-to-layer model built to recover that structure. Given
 
 This is more than object extraction. Layer v1 is designed to understand what belongs together, how elements overlap, and what the hidden parts of the design should contain.
 
-## News
+## The most capable model we have tested
 
-- **2026-08-04** — Aixio published the Layer v1 comparison across recognition, spatial reconstruction, font fidelity, and native upsampling.
-- **2026** — Aixio Layer v1 became available in Aixio Studio.
+On Aixio's internal image-to-layer benchmark, **Layer v1 achieves 94% decomposition accuracy**, compared with **68% for the nearest tested product, Canva Magic Layers (tested May 2026)**.
 
-## See it in action
+| Model | Decomposition accuracy | Result |
+| --- | ---: | --- |
+| **Aixio Layer v1** | **94%** | ███████████████████░ |
+| Canva Magic Layers — tested May 2026 | 68% | ██████████████░░░░░░ |
 
-<div align="center">
-  <a href="https://youtu.be/BkdkW2nn3b0">
-    <img src="https://i.ytimg.com/vi/BkdkW2nn3b0/maxresdefault.jpg" alt="Watch Introducing Aixio Layer v1.0" width="820">
-  </a>
-  <br>
-  <sub>Introducing Aixio Layer v1.0 — click to watch on YouTube</sub>
-</div>
+This is the strongest result among the image-to-layer systems Aixio has tested. It is an **Aixio-reported benchmark**, not yet an independently reproduced leaderboard. We will update this page as the evaluation set and additional results are released.
 
-## What Layer v1 recovers
+### How the benchmark works
 
-### Separated visual elements
+The test starts from real layered design files, not hand-drawn masks or model-generated labels:
 
-Distinct elements are returned as independently editable layers with RGBA transparency and a usable stacking order. Instead of treating the composition as one picture, Layer v1 gives each meaningful part its own handle.
+1. **Ground truth:** collect real PSD and Figma files whose original layer structure is already known.
+2. **Model input:** flatten each design into a single raster image—the same kind of file a user would upload.
+3. **Prediction:** ask each system to recover the layers from that flat image.
+4. **Matching:** pair predicted layers with the corresponding ground-truth layers.
+5. **Scoring:** calculate mean intersection over union between predicted and ground-truth alpha.
 
-<p align="center">
-  <img src="assets/cap-layer-rgba.png" width="300" alt="Example RGBA layer with a transparent background">
-</p>
+The current benchmark covers **10,000 images across 36 design categories**, with the same inputs and scoring procedure used for every tested system. Alpha IoU measures decomposition accuracy; typography, layer logic, and reconstruction quality are also inspected separately because a clean mask alone does not make a design editable. Read the full [evaluation methodology and disclosure notes](docs/EVALUATION.md).
 
-### Reconstructed backgrounds
+## Side-by-side comparison
 
-Removing an object is only useful if the space behind it is restored. Layer v1 reconstructs occluded regions so elements can be moved, resized, or removed without leaving obvious holes in the composition.
+The same dense retail poster was processed by Aixio Layer v1, Lovart, and Picell. It contains display typography, multiple food images, a checkerboard pattern, fine print, an offer badge, and a bordered paper field.
 
-### Live, editable text
-
-Layer v1 returns recognized copy as text—not only as pixels. It recovers typography information such as font family, weight, size, color, alignment, and placement when available, making copy changes and localization much faster.
-
-<p align="center">
-  <img src="assets/cap-layer-text.png" width="500" alt="Example text recovered as editable type">
-</p>
-
-### Spatial structure
-
-The model reasons about layer order, grouping, orientation, and perspective. This helps preserve the original visual hierarchy instead of returning a loose collection of disconnected crops.
-
-### Native upsampling
-
-Layer v1 rebuilds useful detail as it decomposes the image. The goal is to keep extracted assets practical for continued design work rather than making them softer than the source.
-
-## Quick start
-
-Layer v1 is available inside [Aixio Studio](https://aixio.app/studio).
-
-1. Open Aixio Studio and add a finished image.
-2. Choose **Edit Layers**.
-3. Let Layer v1 identify the background, visual assets, text, and composition structure.
-4. Select any returned layer to rewrite copy, restyle type, move objects, or continue building on the canvas.
-5. Export the result for handoff when the composition is ready.
-
-No source design file, original layer data, or embedded metadata is required.
-
-## Showcase
-
-The example below starts with a dense retail poster containing display type, multiple food images, a checkerboard pattern, fine print, and a bordered paper field.
-
-### Aixio Layer v1
-
-![Aixio Layer v1 result for the retail poster](assets/cap2-aixio.png)
-
-Layer v1 separates the headline, offer badge, logo, three food groups, checkerboard, terms, border, and paper field into working parts. The composition remains recognizable while the returned elements become individually editable.
-
-### Why reconstruction matters
-
-The most revealing part of image-to-layer output is not whether visible objects can be cut out. It is whether the background and design structure survive after those objects are removed.
+The honest test is not simply whether a tool cuts out visible objects. It is whether the design still works after those objects are moved: **Was the hidden background reconstructed? Did the text come back as usable type? Did the composition remain intact?**
 
 <table>
   <tr>
@@ -116,7 +74,75 @@ The most revealing part of image-to-layer output is not whether visible objects 
   </tr>
 </table>
 
-These observations describe the supplied runs shown here. Results can vary with source resolution and design complexity. See the [full comparison article](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) and [evaluation notes](docs/EVALUATION.md) for context.
+| What we inspected | Aixio Layer v1 | Lovart — supplied run | Picell — supplied run |
+| --- | --- | --- | --- |
+| Meaningful element recognition | Complete poster structure recovered | Several elements remain fused | More elements found, but the offer is fragmented |
+| Background reconstruction | Poster surface, border, pattern, and paper field preserved | Returned frame is blank rather than reconstructed | Removed content leaves holes and remnants |
+| Typography | Copy returns as editable type with styling | Headline and small copy recognized, but design elements remain fused | Text is fragmented and requires rebuilding |
+| Continued editability | Elements can be moved while the composition remains usable | Significant manual reconstruction required | Composition requires rebuilding |
+
+These observations describe the supplied runs shown here, not every possible output from each product. Results vary with product version, source resolution, and design complexity. See the [full comparison article](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) and [evaluation notes](docs/EVALUATION.md) for context.
+
+## What Layer v1 does better
+
+### 1. It recognizes the complete design
+
+Layer v1 recovers meaningful design units rather than returning a loose collection of crops. In the poster above, it identifies the headline, offer badge, logo, three food groups, terms, checkerboard, border, and paper field.
+
+### 2. It reconstructs what was hidden
+
+Removing an object is only useful if the space behind it is restored. Layer v1 performs amodal completion: it predicts the hidden continuation of backgrounds and objects so elements can be moved, resized, or removed without leaving obvious holes.
+
+### 3. It returns text as type
+
+Recognizing words is not enough. Layer v1 returns copy as editable strings and recovers typography attributes such as font family, weight, size, color, alignment, and placement when available. Designers can rewrite and localize the copy instead of rebuilding it from pixels.
+
+<p align="center">
+  <img src="assets/cap-layer-text.png" width="500" alt="Example text recovered as editable type">
+</p>
+
+### 4. It preserves clean, usable alpha
+
+Visual elements return as RGBA layers with transparent backgrounds, practical boundaries, and a usable stacking order—not only as approximate masks.
+
+<p align="center">
+  <img src="assets/cap-layer-rgba.png" width="300" alt="Example RGBA layer with a transparent background">
+</p>
+
+### 5. It preserves composition logic
+
+Layer v1 reasons about grouping, layer order, orientation, and perspective. The result retains the visual hierarchy of the source instead of scattering extracted pieces across a new layout.
+
+### 6. It preserves useful detail
+
+Native upsampling rebuilds useful texture and edge detail during decomposition. Extracted assets remain practical for continued design work instead of becoming softer than the source.
+
+## See it in action
+
+<div align="center">
+  <a href="https://youtu.be/BkdkW2nn3b0">
+    <img src="https://i.ytimg.com/vi/BkdkW2nn3b0/maxresdefault.jpg" alt="Watch Introducing Aixio Layer v1.0" width="820">
+  </a>
+  <br>
+  <sub>Introducing Aixio Layer v1.0 — click to watch on YouTube</sub>
+</div>
+
+## Quick start
+
+Layer v1 is available inside [Aixio Studio](https://aixio.app/studio).
+
+1. Open Aixio Studio and add a finished image.
+2. Choose **Edit Layers**.
+3. Let Layer v1 identify the background, visual assets, text, and composition structure.
+4. Select any returned layer to rewrite copy, restyle type, move objects, or continue building on the canvas.
+5. Export the result for handoff when the composition is ready.
+
+No source design file, original layer data, or embedded metadata is required.
+
+## News
+
+- **2026-08-04** — Aixio published the Layer v1 comparison across recognition, spatial reconstruction, font fidelity, and native upsampling.
+- **2026** — Aixio Layer v1 became available in Aixio Studio.
 
 ## Designed for real creative work
 
