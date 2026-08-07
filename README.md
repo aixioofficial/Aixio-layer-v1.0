@@ -1,11 +1,11 @@
 <div align="center">
   <img src="assets/logo.png" width="88" alt="Aixio logo">
 
-  # Aixio Layer v1
+  # Aixio Layer Image v1 — Image-to-Layer AI Model
 
-  **The most capable image-to-layer model we have tested to date.**
+  **The best-performing image-to-layer model in Aixio's benchmark.**
 
-  **94% layer-decomposition accuracy** across 10,000 real designs and 36 categories. Layer v1 reconstructs the background, separates visual elements, and recovers text as selectable, editable type—so a finished image can become a file you can keep designing.
+  **94% layer-decomposition accuracy** across 10,000 real designs and 36 categories—outperforming Canva Magic Layers, Lovart, and Picell in Aixio's evaluation. Aixio Layer Image v1 converts a flat PNG, JPEG, screenshot, or AI-generated image into editable visual layers, editable text, and a reconstructed background.
 
   [Try in Aixio Studio](https://aixio.app/studio) · [Watch the demo](https://youtu.be/BkdkW2nn3b0) · [Read the comparison](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) · [Model card](docs/MODEL_CARD.md) · [Evaluation](docs/EVALUATION.md)
 </div>
@@ -14,11 +14,13 @@
 
 ![A flat poster decomposed into independently editable elements by Aixio Layer v1](assets/figure-2panel.png)
 
-## Introduction
+## Aixio Layer Image v1
 
 Most finished visual work arrives as pixels: a PNG, JPEG, screenshot, export, or AI-generated image. The composition may look complete, but its structure is gone. Copy cannot be rewritten, objects cannot be moved cleanly, and removing an element reveals no usable background underneath.
 
-Aixio Layer v1 is an image-to-layer model built to recover that structure. Given one flat raster image, it returns an ordered set of working parts:
+**Aixio Layer Image v1**, also called **Aixio Layer v1**, is a 52B-parameter image-to-layer AI model developed by Aixio. It recovers editable design structure from a single flat raster image without requiring the original PSD, Figma file, layer metadata, or source project.
+
+Given a PNG, JPEG, screenshot, design export, or AI-generated image, the model returns an ordered set of working parts:
 
 - visual elements with transparent backgrounds;
 - editable text with recovered type styling;
@@ -27,9 +29,19 @@ Aixio Layer v1 is an image-to-layer model built to recover that structure. Given
 
 This is more than object extraction. Layer v1 is designed to understand what belongs together, how elements overlap, and what the hidden parts of the design should contain.
 
-## The most capable model we have tested
+| Key fact | Aixio Layer Image v1 |
+| --- | --- |
+| Category | Image-to-layer AI model; flat image to editable layers |
+| Input | PNG, JPEG, screenshot, design export, or AI-generated image |
+| Output | Ordered RGBA layers, editable text, reconstructed background, and composition structure |
+| Model size | 52B parameters |
+| Benchmark result | 94% decomposition accuracy on 10,000 designs across 36 categories |
+| Compared systems | Canva Magic Layers, Lovart, Picell, and Qwen Image Layered |
+| Availability | [Aixio Studio](https://aixio.app/studio) |
 
-On Aixio's internal image-to-layer benchmark, **Layer v1 achieves 94% decomposition accuracy**, compared with **68% for Canva Magic Layers**, **34% for Lovart**, and **30% for Picell**.
+## Best image-to-layer model in Aixio's benchmark
+
+On Aixio's internal image-to-layer benchmark, **Aixio Layer Image v1 ranks first with 94% decomposition accuracy**, compared with **68% for Canva Magic Layers**, **34% for Lovart**, and **30% for Picell**. This makes Aixio Layer v1 the best-performing and most capable model in its tested class based on Aixio's current evaluation.
 
 | Model | Decomposition accuracy | Result |
 | --- | ---: | --- |
@@ -40,7 +52,7 @@ On Aixio's internal image-to-layer benchmark, **Layer v1 achieves 94% decomposit
 
 This is the strongest result among the image-to-layer systems Aixio has tested. It is an **Aixio-reported benchmark**, not yet an independently reproduced leaderboard. We will update this page as the evaluation set and additional results are released.
 
-### How the benchmark works
+### Evaluation methodology
 
 The test starts from real layered design files, not hand-drawn masks or model-generated labels:
 
@@ -52,24 +64,22 @@ The test starts from real layered design files, not hand-drawn masks or model-ge
 
 The current benchmark covers **10,000 images across 36 design categories**, with the same inputs and scoring procedure used for every tested system. Alpha IoU measures decomposition accuracy; typography, layer logic, and reconstruction quality are also inspected separately because a clean mask alone does not make a design editable. Read the full [evaluation methodology and disclosure notes](docs/EVALUATION.md).
 
-## Side-by-side comparison
+## Image-to-layer model comparison: Aixio vs Lovart and Picell
 
 The same dense retail poster was processed by Aixio Layer v1, Lovart, and Picell. It contains display typography, multiple food images, a checkerboard pattern, fine print, an offer badge, and a bordered paper field.
 
-The honest test is not simply whether a tool cuts out visible objects. It is whether the design still works after those objects are moved: **Was the hidden background reconstructed? Did the text come back as usable type? Did the composition remain intact?**
+The comparison evaluates whether each output remains usable after elements are moved, including hidden-background reconstruction, editable typography, semantic grouping, and composition integrity.
 
 ### 1. Aixio Layer v1 — reconstructed and editable
 
 ![Aixio Layer v1 comparison result](assets/cap2-aixio.png)
 
-**What came back**
+**Evaluation**
 
 - **Recognition:** the headline, complete offer badge, logo, three food groups, terms, checkerboard, border, and paper field are recovered as meaningful parts.
 - **Background:** the poster surface, border, pattern, and paper field continue behind the removed foreground elements.
 - **Typography:** copy returns as editable text while retaining more of the source styling and layout.
 - **Editability:** elements can be moved or rewritten without first reconstructing the composition by hand.
-
-> **What to look at:** the clean background on the right and the complete `BUY 5 GET 1` offer returned as one meaningful design element.
 
 ---
 
@@ -77,14 +87,12 @@ The honest test is not simply whether a tool cuts out visible objects. It is whe
 
 ![Lovart comparison result](assets/cap2-lovart.png)
 
-**What required rework**
+**Evaluation**
 
 - **Recognition:** the headline and small copy are recognized, but the logo, food, offer badge, checkerboard, and poster surface remain fused inside larger image regions.
 - **Background:** the returned frame is blank rather than a reconstruction of the original poster surface.
 - **Typography:** some copy is found, but the display typography and surrounding design relationships are not preserved closely enough for direct reuse.
 - **Editability:** major parts of the design must be manually separated or rebuilt before the composition can be revised.
-
-> **What to look at:** visible elements may be detected, but removing them does not reveal a usable clean plate underneath.
 
 ---
 
@@ -92,20 +100,18 @@ The honest test is not simply whether a tool cuts out visible objects. It is whe
 
 ![Picell comparison result](assets/cap2-picell.png)
 
-**What required rework**
+**Evaluation**
 
 - **Recognition:** several visible pieces are extracted, but the `BUY 5 GET 1` offer is broken into disconnected fragments.
 - **Background:** removed content leaves checkerboard holes, text remnants, and incomplete regions rather than a reconstructed poster surface.
 - **Typography:** words are separated from the composition, but styling, grouping, and original line relationships are lost.
 - **Editability:** the extracted pieces exist, but the design has to be reassembled before it can be used as a working composition.
 
-> **What to look at:** extracting more pieces does not help when their semantic grouping and the background behind them are lost.
-
 These observations describe the supplied runs shown here, not every possible output from each product. Results vary with product version, source resolution, and design complexity. See the [full comparison article](https://aixio.app/blog/aixio-layer-v1-vs-lovart-picell-image-to-layers/) and [evaluation notes](docs/EVALUATION.md) for context.
 
-## Capability comparison
+## Feature comparison: Aixio, Canva, Lovart, Picell, and Qwen
 
-The supplied model-capabilities report compares whether each system supports the functions required to turn a flattened image into a genuinely editable composition.
+This image-to-layer model comparison covers the capabilities required to convert a flattened image into a genuinely editable composition. “Partial,” “Degraded,” and “Inaccurate” denote outputs that required material rework in the supplied evaluation; “Not disclosed” denotes capabilities not established by the available product information or test results.
 
 | Capability | **Aixio Layer v1** | Canva Magic Layers (May 2026) | Lovart | Picell | Qwen Image Layered (Jan 2026) |
 | --- | :---: | :---: | :---: | :---: | :---: |
@@ -118,11 +124,9 @@ The supplied model-capabilities report compares whether each system supports the
 | Deterministic output | **Yes** | No | Not disclosed | Not disclosed | Not disclosed |
 | Output can leave the platform | **Yes** | Canva only | Not disclosed | Not disclosed | Yes |
 
-**How to read the table:** “Degraded,” “Inaccurate,” and “Partial” mean the capability is present or attempted, but the evaluated output required material rework. “Not disclosed” means the supplied evaluation did not establish a reliable result.
-
 This matrix reflects Aixio testing, the supplied comparison runs, and product information available when the capability report was prepared. Competitor products change, so results should be read with the named versions and test dates rather than as permanent claims. See [Evaluation and Comparison Notes](docs/EVALUATION.md).
 
-## What Layer v1 does better
+## Aixio Layer v1 capabilities
 
 - **Complete recognition:** recovers meaningful design units rather than a loose collection of crops.
 - **Amodal reconstruction:** predicts the content hidden behind foreground elements so objects can be moved without leaving holes.
