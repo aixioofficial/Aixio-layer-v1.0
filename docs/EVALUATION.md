@@ -11,7 +11,18 @@ Image-to-layer systems should not be judged only by whether they can cut out vis
 
 A system can perform well on object extraction while still returning a composition that has to be rebuilt manually.
 
-## Internal quantitative benchmark
+## Benchmark result
+
+**Aixio Layer v1 is the most capable image-to-layer model Aixio has tested to date.** On the current internal benchmark, Layer v1 scores **94% decomposition accuracy**, compared with **68% for the nearest tested product, Canva Magic Layers (tested May 2026)**.
+
+| Model | Decomposition accuracy | Test status |
+| --- | ---: | --- |
+| **Aixio Layer v1** | **94%** | Current model |
+| Canva Magic Layers | 68% | Tested May 2026 |
+
+This is an Aixio-reported comparison. It should not be described as an independently reproduced global leaderboard until the evaluation set, scoring code, and competitor configurations are public.
+
+## Quantitative benchmark methodology
 
 Aixio's internal model materials describe the following protocol:
 
@@ -26,7 +37,7 @@ Aixio's internal model materials describe the following protocol:
 
 This construction avoids asking a model or human annotator to invent the ground truth after the fact: the source layer structure already exists before the image is flattened.
 
-The 94% figure should be labeled **Aixio-reported** until the dataset split, matching procedure, scoring code, per-category scores, and failure analysis are publicly released. IoU also does not fully measure typography fidelity, layer naming, correct grouping, or the visual plausibility of reconstructed hidden regions, so those qualities need separate evaluation.
+The 94% figure should be labeled **Aixio-reported** until the dataset split, matching procedure, scoring code, per-category scores, and failure analysis are publicly released. IoU also does not fully measure typography fidelity, layer naming, correct grouping, or the visual plausibility of reconstructed hidden regions, so those qualities are evaluated separately through output inspection and real editing tasks.
 
 ## Supplied qualitative comparison
 
@@ -49,6 +60,17 @@ The supplied run recognizes some text and imagery, but portions of the display t
 ![Picell supplied result](../assets/cap2-picell.png)
 
 The supplied run extracts several visible pieces, but fragments the offer and does not return a reconstructed composition ready for direct editing.
+
+## What Layer v1 did well
+
+Across the quantitative benchmark and the supplied qualitative comparison, Layer v1's strongest behaviors are:
+
+- **Complete recognition:** it recovers more of the meaningful design structure instead of leaving major elements fused.
+- **Background reconstruction:** it returns a usable clean plate rather than an empty frame or a surface with holes and remnants.
+- **Typography fidelity:** it recovers copy as editable text and retains more of its visual styling.
+- **Layer logic:** it preserves grouping, stacking order, placement, and the relationships between elements.
+- **Usable alpha:** extracted elements have cleaner transparent boundaries for continued editing.
+- **Detail retention:** native upsampling preserves useful texture and edge information during decomposition.
 
 ## Reading a comparison honestly
 
