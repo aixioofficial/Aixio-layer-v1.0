@@ -1,6 +1,8 @@
 <div align="center">
   <img src="assets/logo.png" width="88" alt="Aixio logo">
 
+  > **Aixio Layer v2 is out →** [github.com/Aixio-AI/aixio-layer-v2](https://github.com/Aixio-AI/aixio-layer-v2)
+
   # Aixio Layer Image v1 — Image-to-Layer AI Model
 
   **The best-performing image-to-layer model in Aixio's benchmark.**
